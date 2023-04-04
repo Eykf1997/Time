@@ -1,0 +1,975 @@
+<!DOCTYPE>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Circular Heat Map</title>
+
+<!-- JavaScript Libraries //-->
+<script src="https://d3js.org/d3.v3.min.js"></script>
+
+
+<!-- CSS Style //-->
+<link href="style.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="main.js"></script>
+</head>
+
+<body>
+    <div style="margin-left:50px;"  id="chart"></div>
+</body>
+<script>
+    var inputData =
+    [
+    {
+    "Weekday": "Monday",
+    "Year": 1966,
+    "NumberKilled": 15
+    },
+    {
+    "Weekday": "Saturday",
+    "Year": 1966,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Monday",
+    "Year": 1967,
+    "NumberKilled": 6
+    },
+    {
+    "Weekday": "Saturday",
+    "Year": 1968,
+    "NumberKilled": 7
+    },
+    {
+    "Weekday": "Saturday",
+    "Year": 1969,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Wednesday",
+    "Year": 1970,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Monday",
+    "Year": 1972,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Wednesday",
+    "Year": 1972,
+    "NumberKilled": 6
+    },
+    {
+    "Weekday": "Sunday",
+    "Year": 1973,
+    "NumberKilled": 7
+    },
+    {
+    "Weekday": "Sunday",
+    "Year": 1975,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Monday",
+    "Year": 1976,
+    "NumberKilled": 7
+    },
+    {
+    "Weekday": "Monday",
+    "Year": 1977,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Saturday",
+    "Year": 1977,
+    "NumberKilled": 6
+    },
+    {
+    "Weekday": "Friday",
+    "Year": 1977,
+    "NumberKilled": 6
+    },
+    {
+    "Weekday": "Saturday",
+    "Year": 1978,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Sunday",
+    "Year": 1980,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Sunday",
+    "Year": 1980,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Monday",
+    "Year": 1980,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Thursday",
+    "Year": 1981,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Friday",
+    "Year": 1981,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Monday",
+    "Year": 1982,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Monday",
+    "Year": 1982,
+    "NumberKilled": 6
+    },
+    {
+    "Weekday": "Friday",
+    "Year": 1982,
+    "NumberKilled": 8
+    },
+    {
+    "Weekday": "Thursday",
+    "Year": 1983,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Tuesday",
+    "Year": 1983,
+    "NumberKilled": 6
+    },
+    {
+    "Weekday": "Tuesday",
+    "Year": 1983,
+    "NumberKilled": 6
+    },
+    {
+    "Weekday": "Thursday",
+    "Year": 1984,
+    "NumberKilled": 8
+    },
+    {
+    "Weekday": "Friday",
+    "Year": 1984,
+    "NumberKilled": 6
+    },
+    {
+    "Weekday": "Wednesday",
+    "Year": 1984,
+    "NumberKilled": 21
+    },
+    {
+    "Weekday": "Tuesday",
+    "Year": 1984,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Saturday",
+    "Year": 1985,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Wednesday",
+    "Year": 1986,
+    "NumberKilled": 14
+    },
+    {
+    "Weekday": "Thursday",
+    "Year": 1987,
+    "NumberKilled": 6
+    },
+    {
+    "Weekday": "Tuesday",
+    "Year": 1988,
+    "NumberKilled": 7
+    },
+    {
+    "Weekday": "Sunday",
+    "Year": 1988,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Thursday",
+    "Year": 1988,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Tuesday",
+    "Year": 1989,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Thursday",
+    "Year": 1989,
+    "NumberKilled": 9
+    },
+    {
+    "Weekday": "Monday",
+    "Year": 1990,
+    "NumberKilled": 11
+    },
+    {
+    "Weekday": "Thursday",
+    "Year": 1991,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Wednesday",
+    "Year": 1991,
+    "NumberKilled": 23
+    },
+    {
+    "Weekday": "Friday",
+    "Year": 1991,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Saturday",
+    "Year": 1991,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Thursday",
+    "Year": 1991,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Sunday",
+    "Year": 1992,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Friday",
+    "Year": 1992,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Thursday",
+    "Year": 1992,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Sunday",
+    "Year": 1992,
+    "NumberKilled": 6
+    },
+    {
+    "Weekday": "Thursday",
+    "Year": 1993,
+    "NumberKilled": 8
+    },
+    {
+    "Weekday": "Friday",
+    "Year": 1993,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Thursday",
+    "Year": 1993,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Thursday",
+    "Year": 1993,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Tuesday",
+    "Year": 1993,
+    "NumberKilled": 6
+    },
+    {
+    "Weekday": "Tuesday",
+    "Year": 1993,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Monday",
+    "Year": 1994,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Saturday",
+    "Year": 1994,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Monday",
+    "Year": 1995,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Wednesday",
+    "Year": 1995,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Tuesday",
+    "Year": 1995,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Friday",
+    "Year": 1996,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Wednesday",
+    "Year": 1996,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Tuesday",
+    "Year": 1997,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Monday",
+    "Year": 1997,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Wednesday",
+    "Year": 1997,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Thursday",
+    "Year": 1997,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Friday",
+    "Year": 1998,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Tuesday",
+    "Year": 1998,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Tuesday",
+    "Year": 1998,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Wednesday",
+    "Year": 1998,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Wednesday",
+    "Year": 1999,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Tuesday",
+    "Year": 1999,
+    "NumberKilled": 13
+    },
+    {
+    "Weekday": "Tuesday",
+    "Year": 1999,
+    "NumberKilled": 13
+    },
+    {
+    "Weekday": "Thursday",
+    "Year": 1999,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Thursday",
+    "Year": 1999,
+    "NumberKilled": 12
+    },
+    {
+    "Weekday": "Wednesday",
+    "Year": 1999,
+    "NumberKilled": 7
+    },
+    {
+    "Weekday": "Tuesday",
+    "Year": 1999,
+    "NumberKilled": 7
+    },
+    {
+    "Weekday": "Thursday",
+    "Year": 1999,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Monday",
+    "Year": 2000,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Friday",
+    "Year": 2000,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Tuesday",
+    "Year": 2000,
+    "NumberKilled": 7
+    },
+    {
+    "Weekday": "Tuesday",
+    "Year": 2001,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Monday",
+    "Year": 2001,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Tuesday",
+    "Year": 2001,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Saturday",
+    "Year": 2001,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Friday",
+    "Year": 2002,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Tuesday",
+    "Year": 2003,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Tuesday",
+    "Year": 2003,
+    "NumberKilled": 6
+    },
+    {
+    "Weekday": "Wednesday",
+    "Year": 2003,
+    "NumberKilled": 6
+    },
+    {
+    "Weekday": "Tuesday",
+    "Year": 2003,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Friday",
+    "Year": 2004,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Sunday",
+    "Year": 2004,
+    "NumberKilled": 6
+    },
+    {
+    "Weekday": "Wednesday",
+    "Year": 2004,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Friday",
+    "Year": 2005,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Saturday",
+    "Year": 2005,
+    "NumberKilled": 7
+    },
+    {
+    "Weekday": "Monday",
+    "Year": 2005,
+    "NumberKilled": 9
+    },
+    {
+    "Weekday": "Sunday",
+    "Year": 2005,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Monday",
+    "Year": 2006,
+    "NumberKilled": 7
+    },
+    {
+    "Weekday": "Saturday",
+    "Year": 2006,
+    "NumberKilled": 6
+    },
+    {
+    "Weekday": "Sunday",
+    "Year": 2006,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Monday",
+    "Year": 2006,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Monday",
+    "Year": 2007,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Monday",
+    "Year": 2007,
+    "NumberKilled": 32
+    },
+    {
+    "Weekday": "Wednesday",
+    "Year": 2007,
+    "NumberKilled": 8
+    },
+    {
+    "Weekday": "Sunday",
+    "Year": 2007,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Thursday",
+    "Year": 2008,
+    "NumberKilled": 6
+    },
+    {
+    "Weekday": "Thursday",
+    "Year": 2008,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Tuesday",
+    "Year": 2008,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Wednesday",
+    "Year": 2008,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Tuesday",
+    "Year": 2008,
+    "NumberKilled": 6
+    },
+    {
+    "Weekday": "Sunday",
+    "Year": 2009,
+    "NumberKilled": 8
+    },
+    {
+    "Weekday": "Friday",
+    "Year": 2009,
+    "NumberKilled": 13
+    },
+    {
+    "Weekday": "Sunday",
+    "Year": 2009,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Thursday",
+    "Year": 2009,
+    "NumberKilled": 13
+    },
+    {
+    "Weekday": "Sunday",
+    "Year": 2009,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Saturday",
+    "Year": 2010,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Sunday",
+    "Year": 2010,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Tuesday",
+    "Year": 2010,
+    "NumberKilled": 8
+    },
+    {
+    "Weekday": "Saturday",
+    "Year": 2010,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Saturday",
+    "Year": 2010,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Saturday",
+    "Year": 2011,
+    "NumberKilled": 6
+    },
+    {
+    "Weekday": "Sunday",
+    "Year": 2011,
+    "NumberKilled": 7
+    },
+    {
+    "Weekday": "Tuesday",
+    "Year": 2011,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Wednesday",
+    "Year": 2011,
+    "NumberKilled": 8
+    },
+    {
+    "Weekday": "Monday",
+    "Year": 2012,
+    "NumberKilled": 7
+    },
+    {
+    "Weekday": "Wednesday",
+    "Year": 2012,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Friday",
+    "Year": 2012,
+    "NumberKilled": 12
+    },
+    {
+    "Weekday": "Sunday",
+    "Year": 2012,
+    "NumberKilled": 6
+    },
+    {
+    "Weekday": "Thursday",
+    "Year": 2012,
+    "NumberKilled": 6
+    },
+    {
+    "Weekday": "Friday",
+    "Year": 2012,
+    "NumberKilled": 27
+    },
+    {
+    "Weekday": "Wednesday",
+    "Year": 2013,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Sunday",
+    "Year": 2013,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Friday",
+    "Year": 2013,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Friday",
+    "Year": 2013,
+    "NumberKilled": 6
+    },
+    {
+    "Weekday": "Monday",
+    "Year": 2013,
+    "NumberKilled": 12
+    },
+    {
+    "Weekday": "Thursday",
+    "Year": 2014,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Friday",
+    "Year": 2014,
+    "NumberKilled": 6
+    },
+    {
+    "Weekday": "Friday",
+    "Year": 2014,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Wednesday",
+    "Year": 2015,
+    "NumberKilled": 9
+    },
+    {
+    "Weekday": "Thursday",
+    "Year": 2015,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Thursday",
+    "Year": 2015,
+    "NumberKilled": 9
+    },
+    {
+    "Weekday": "Saturday",
+    "Year": 2015,
+    "NumberKilled": 6
+    },
+    {
+    "Weekday": "Wednesday",
+    "Year": 2015,
+    "NumberKilled": 14
+    },
+    {
+    "Weekday": "Wednesday",
+    "Year": 2015,
+    "NumberKilled": 14
+    },
+    {
+    "Weekday": "Saturday",
+    "Year": 2016,
+    "NumberKilled": 6
+    },
+    {
+    "Weekday": "Wednesday",
+    "Year": 2016,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Sunday",
+    "Year": 2016,
+    "NumberKilled": 49
+    },
+    {
+    "Weekday": "Thursday",
+    "Year": 2016,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Friday",
+    "Year": 2016,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Friday",
+    "Year": 2017,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Monday",
+    "Year": 2017,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Wednesday",
+    "Year": 2017,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Monday",
+    "Year": 2017,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Sunday",
+    "Year": 2017,
+    "NumberKilled": 60
+    },
+    {
+    "Weekday": "Sunday",
+    "Year": 2017,
+    "NumberKilled": 25
+    },
+    {
+    "Weekday": "Tuesday",
+    "Year": 2017,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Sunday",
+    "Year": 2018,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Wednesday",
+    "Year": 2018,
+    "NumberKilled": 17
+    },
+    {
+    "Weekday": "Monday",
+    "Year": 2018,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Sunday",
+    "Year": 2018,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Friday",
+    "Year": 2018,
+    "NumberKilled": 10
+    },
+    {
+    "Weekday": "Thursday",
+    "Year": 2018,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Wednesday",
+    "Year": 2018,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Saturday",
+    "Year": 2018,
+    "NumberKilled": 11
+    },
+    {
+    "Weekday": "Wednesday",
+    "Year": 2018,
+    "NumberKilled": 12
+    },
+    {
+    "Weekday": "Wednesday",
+    "Year": 2019,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Friday",
+    "Year": 2019,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Friday",
+    "Year": 2019,
+    "NumberKilled": 12
+    },
+    {
+    "Weekday": "Saturday",
+    "Year": 2019,
+    "NumberKilled": 23
+    },
+    {
+    "Weekday": "Sunday",
+    "Year": 2019,
+    "NumberKilled": 9
+    },
+    {
+    "Weekday": "Saturday",
+    "Year": 2019,
+    "NumberKilled": 7
+    },
+    {
+    "Weekday": "Tuesday",
+    "Year": 2019,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Tuesday",
+    "Year": 2019,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Wednesday",
+    "Year": 2020,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Sunday",
+    "Year": 2020,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Saturday",
+    "Year": 2021,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Tuesday",
+    "Year": 2021,
+    "NumberKilled": 8
+    },
+    {
+    "Weekday": "Monday",
+    "Year": 2021,
+    "NumberKilled": 10
+    },
+    {
+    "Weekday": "Wednesday",
+    "Year": 2021,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Thursday",
+    "Year": 2021,
+    "NumberKilled": 8
+    },
+    {
+    "Weekday": "Wednesday",
+    "Year": 2021,
+    "NumberKilled": 9
+    },
+    {
+    "Weekday": "Tuesday",
+    "Year": 2021,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Monday",
+    "Year": 2021,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Saturday",
+    "Year": 2022,
+    "NumberKilled": 10
+    },
+    {
+    "Weekday": "Tuesday",
+    "Year": 2022,
+    "NumberKilled": 21
+    },
+    {
+    "Weekday": "Wednesday",
+    "Year": 2022,
+    "NumberKilled": 4
+    },
+    {
+    "Weekday": "Monday",
+    "Year": 2022,
+    "NumberKilled": 7
+    },
+    {
+    "Weekday": "Thursday",
+    "Year": 2022,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Saturday/Sunday",
+    "Year": 2022,
+    "NumberKilled": 5
+    },
+    {
+    "Weekday": "Tuesday",
+    "Year": 2022,
+    "NumberKilled": 6
+    }]
+
+    var radial_labels = ["1966", "1967", "1968", "1969", "`970", "1971", "1972", "1973", "1974", "1975", "1976", "1978", "1979", "1980", "1981", "1982", "1983", "1984", "1985", 
+    "1986", "1987", "1988", "1989", "1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022"];
+    var segment_labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+    loadCircularHeatMap(inputData,"#chart",radial_labels, segment_labels);
+</script>
+</html>

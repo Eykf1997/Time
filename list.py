@@ -1,0 +1,1 @@
+import csv; lst=list(csv.reader(open('data.csv'))); print(lst)
